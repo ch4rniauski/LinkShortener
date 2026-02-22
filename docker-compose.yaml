@@ -1,0 +1,15 @@
+services:
+  maria-db:
+    image: mariadb:lts-ubi9
+    container_name: maria-db
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=5432
+      - MARIADB_USER=example-user
+      - MARIADB_PASSWORD=5432
+      - MARIADB_DATABASE=Links
+    volumes:
+      - maria-db-data:/var/lib/mysql
+volumes:
+  maria-db-data:

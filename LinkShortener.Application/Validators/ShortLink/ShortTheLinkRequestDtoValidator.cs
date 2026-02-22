@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ch4rniauski.LinkShortener.Application.Validators.ShortLink;
 
-internal sealed class ShortTheLinkRequestDtoValidator : AbstractValidator<ShortTheLinkRequestDto>
+public sealed class ShortTheLinkRequestDtoValidator : AbstractValidator<ShortTheLinkRequestDto>
 {
     public ShortTheLinkRequestDtoValidator()
     {

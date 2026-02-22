@@ -18,8 +18,6 @@ internal sealed class ShortTheLinkCommandHandler : IRequestHandler<ShortTheLinkC
     private readonly IValidator<ShortTheLinkRequestDto> _validator;
     private readonly IMapper _mapper;
     private readonly IShortLinkTokenProvider _tokenProvider;
-    
-    private const string BaseUrl = "http://localhost:8080/";
 
     public ShortTheLinkCommandHandler(
         IShortLinkRepository repository,
@@ -47,12 +45,12 @@ internal sealed class ShortTheLinkCommandHandler : IRequestHandler<ShortTheLinkC
         
         var entity = _mapper.Map<ShortLinkEntity>(request.Request);
 
-        string token;
+        string shortToken;
         while (true)
         {
-            token = _tokenProvider.GenerateToken();
+            shortToken = _tokenProvider.GenerateToken();
             
-            var shortLink = await _repository.GetByTokenAsync(token, cancellationToken);
+            var shortLink = await _repository.GetByTokenAsync(shortToken, cancellationToken);
 
             if (shortLink is null)
             {
@@ -60,7 +58,7 @@ internal sealed class ShortTheLinkCommandHandler : IRequestHandler<ShortTheLinkC
             }
         }
 
-        entity.ShortToken = token;
+        entity.ShortToken = shortToken;
         
         var isAdded = await _repository.AddAsync(entity, cancellationToken);
 
@@ -70,7 +68,7 @@ internal sealed class ShortTheLinkCommandHandler : IRequestHandler<ShortTheLinkC
                 .Failure(Error.InternalError("Error occured while adding short link"));
         }
 
-        var response = new ShortTheLinkResponseDto(BaseUrl + token);
+        var response = new ShortTheLinkResponseDto($"{request.BaseUrl}/{shortToken}");
         
         return Result<ShortTheLinkResponseDto>.Success(response);
     }

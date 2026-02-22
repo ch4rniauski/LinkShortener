@@ -5,4 +5,6 @@ using MediatR;
 
 namespace ch4rniauski.LinkShortener.Application.UseCases.Commands.ShortLink;
 
-public sealed record ShortTheLinkCommand(ShortTheLinkRequestDto Request) : IRequest<Result<ShortTheLinkResponseDto>>;
+public sealed record ShortTheLinkCommand(
+    ShortTheLinkRequestDto Request,
+    string BaseUrl) : IRequest<Result<ShortTheLinkResponseDto>>;

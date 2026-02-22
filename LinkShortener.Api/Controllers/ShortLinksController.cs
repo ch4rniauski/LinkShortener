@@ -18,12 +18,16 @@ public class ShortLinksController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("shorter")]
+    [HttpPost("shortener")]
     public async Task<ActionResult<ShortTheLinkResponseDto>> ShortTheLink(
         [FromBody] ShortTheLinkRequestDto request,
         CancellationToken cancellationToken)
     {
-        var command = new ShortTheLinkCommand(request);
+        var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+        
+        var command = new ShortTheLinkCommand(
+            request,
+            baseUrl);
         
         var result = await _mediator.Send(command, cancellationToken);
 

@@ -11,4 +11,10 @@ public abstract class Error
         StatusCode = statusCode;
         Description = description;
     }
+
+    public static ValidationError FailedValidation(string message)
+        => new ValidationError(message);
+    
+    public static InternalServerError InternalError(string message)
+        => new(message);
 }

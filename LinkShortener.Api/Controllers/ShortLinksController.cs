@@ -36,7 +36,7 @@ public class ShortLinksController : ControllerBase
                 statusCode: err.StatusCode));
     }
 
-    [HttpGet("{token:alpha}")]
+    [HttpGet("{token}")]
     public async Task<ActionResult> RedirectByShortLink(string token, CancellationToken cancellationToken)
     {
         var command = new GetOriginalUrlByShortTokenCommand(token);

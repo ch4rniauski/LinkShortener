@@ -1,3 +1,4 @@
+using ch4rniauski.LinkShortener.Api.Extensions;
 using ch4rniauski.LinkShortener.Application.Extensions;
 using ch4rniauski.LinkShortener.Infrastructure.Extensions;
 
@@ -13,6 +14,8 @@ builder.Services.AddCors(opt =>
             .AllowAnyMethod();
     }));
 
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddMediatrConfiguration();
 builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddValidationConfiguration();
@@ -21,8 +24,16 @@ builder.Services.AddLinksContextConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseCors();
 
 app.MapControllers();
+
+await app.ApplyMigrationsAsync();
 
 await app.RunAsync();

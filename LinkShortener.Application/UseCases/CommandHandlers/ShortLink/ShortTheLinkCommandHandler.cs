@@ -43,6 +43,16 @@ internal sealed class ShortTheLinkCommandHandler : IRequestHandler<ShortTheLinkC
                 .Failure(Error.FailedValidation(message));
         }
         
+        var doesExist = await _repository.GetByOriginalUrlAsync(request.Request.OriginalUrl, cancellationToken);
+
+        ShortTheLinkResponseDto? response;
+        if (doesExist is not null)
+        {
+            response = new ShortTheLinkResponseDto($"{request.BaseUrl}/{doesExist.ShortToken}");
+        
+            return Result<ShortTheLinkResponseDto>.Success(response);
+        }
+        
         var entity = _mapper.Map<ShortLinkEntity>(request.Request);
 
         string shortToken;
@@ -61,14 +71,14 @@ internal sealed class ShortTheLinkCommandHandler : IRequestHandler<ShortTheLinkC
         entity.ShortToken = shortToken;
         
         var isAdded = await _repository.AddAsync(entity, cancellationToken);
-
+        
         if (!isAdded)
         {
             return Result<ShortTheLinkResponseDto>
                 .Failure(Error.InternalError("Error occured while adding short link"));
         }
 
-        var response = new ShortTheLinkResponseDto($"{request.BaseUrl}/{shortToken}");
+        response = new ShortTheLinkResponseDto($"{request.BaseUrl}/{shortToken}");
         
         return Result<ShortTheLinkResponseDto>.Success(response);
     }

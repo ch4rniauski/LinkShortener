@@ -1,4 +1,4 @@
-using ch4rniauski.LinkShortener.Application.Dto.ShortLinks.Requests;
+using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

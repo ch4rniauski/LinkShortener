@@ -6,4 +6,5 @@ public interface IShortLinkRepository
 {
     Task<bool> AddAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default);
     Task<ShortLinkEntity?> GetByTokenAsync(string token, CancellationToken cancellationToken = default);
+    Task<bool> UpdateAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default);
 }

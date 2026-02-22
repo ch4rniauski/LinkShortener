@@ -2,7 +2,6 @@ using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Requests;
 using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Responses;
 using ch4rniauski.LinkShortener.Application.Extensions;
 using ch4rniauski.LinkShortener.Application.UseCases.Commands.ShortLink;
-using ch4rniauski.LinkShortener.Application.UseCases.Queries.ShortLink;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,9 +39,9 @@ public class ShortLinksController : ControllerBase
     [HttpGet("{token:alpha}")]
     public async Task<ActionResult> RedirectByShortLink(string token, CancellationToken cancellationToken)
     {
-        var query = new GetOriginalUrlByShortTokenQuery(token);
+        var command = new GetOriginalUrlByShortTokenCommand(token);
         
-        var result = await _mediator.Send(query, cancellationToken);
+        var result = await _mediator.Send(command, cancellationToken);
         
         return result.Match<RedirectByShortLinkResponse, ActionResult>(
             onSuccess: res => Redirect(res.OriginalUrl),

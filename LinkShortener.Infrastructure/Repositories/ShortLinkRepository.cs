@@ -26,4 +26,11 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
         => await _dbSet
             .AsNoTracking()
             .FirstOrDefaultAsync(s => s.ShortToken == token, cancellationToken);
+
+    public async Task<bool> UpdateAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default)
+    {
+        _dbSet.Update(entity);
+        
+        return await _context.SaveChangesAsync(cancellationToken) > 0;
+    }
 }

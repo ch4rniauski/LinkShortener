@@ -2,21 +2,21 @@ using ch4rniauski.LinkShortener.Application.Common.Errors;
 using ch4rniauski.LinkShortener.Application.Common.Results;
 using ch4rniauski.LinkShortener.Application.Contracts.Repositories;
 using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Responses;
-using ch4rniauski.LinkShortener.Application.UseCases.Queries.ShortLink;
+using ch4rniauski.LinkShortener.Application.UseCases.Commands.ShortLink;
 using MediatR;
 
-namespace ch4rniauski.LinkShortener.Application.UseCases.QueryHandlers.ShortLink;
+namespace ch4rniauski.LinkShortener.Application.UseCases.CommandHandlers.ShortLink;
 
-internal sealed class GetOriginalUrlByShortTokenQueryHandler : IRequestHandler<GetOriginalUrlByShortTokenQuery, Result<RedirectByShortLinkResponse>>
+internal sealed class GetOriginalUrlByShortTokenCommandHandler : IRequestHandler<GetOriginalUrlByShortTokenCommand, Result<RedirectByShortLinkResponse>>
 {
     private readonly IShortLinkRepository _repository;
 
-    public GetOriginalUrlByShortTokenQueryHandler(IShortLinkRepository repository)
+    public GetOriginalUrlByShortTokenCommandHandler(IShortLinkRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<Result<RedirectByShortLinkResponse>> Handle(GetOriginalUrlByShortTokenQuery request, CancellationToken cancellationToken)
+    public async Task<Result<RedirectByShortLinkResponse>> Handle(GetOriginalUrlByShortTokenCommand request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetByTokenAsync(request.Token, cancellationToken);
 
@@ -25,6 +25,10 @@ internal sealed class GetOriginalUrlByShortTokenQueryHandler : IRequestHandler<G
             return Result<RedirectByShortLinkResponse>
                 .Failure(Error.NotFound($"Url with token {request.Token} does not exist"));
         }
+
+        entity.ClickCount++;
+        
+        await _repository.UpdateAsync(entity, cancellationToken);
 
         var response = new RedirectByShortLinkResponse(entity.OriginalUrl);
         

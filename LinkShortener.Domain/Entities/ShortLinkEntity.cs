@@ -1,4 +1,4 @@
-namespace LinkShortener.Domain.Entities;
+namespace ch4rniauski.LinkShortener.Domain.Entities;
 
 public class ShortLinkEntity
 {

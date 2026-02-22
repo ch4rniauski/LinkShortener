@@ -1,7 +1,7 @@
-using LinkShortener.Domain.Entities;
+using ch4rniauski.LinkShortener.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace LinkShortener.Infrastructure;
+namespace ch4rniauski.LinkShortener.Infrastructure;
 
 public class LinksContext : DbContext
 {

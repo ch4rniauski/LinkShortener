@@ -1,4 +1,4 @@
-using LinkShortener.Domain.Entities;
+using ch4rniauski.LinkShortener.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,8 +29,8 @@ internal sealed class ShortLinkEntityConfiguration : IEntityTypeConfiguration<Sh
             .IsRequired()
             .HasDefaultValue(0);
         
-        builder.
-            Property(s => s.CreatedAt)
+        builder
+            .Property(s => s.CreatedAt)
             .IsRequired();
     }
 }

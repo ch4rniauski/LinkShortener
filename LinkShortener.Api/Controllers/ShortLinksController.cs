@@ -1,4 +1,7 @@
 using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Requests;
+using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Responses;
+using ch4rniauski.LinkShortener.Application.Extensions;
+using ch4rniauski.LinkShortener.Application.UseCases.Commands.ShortLink;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +19,18 @@ public class ShortLinksController : ControllerBase
     }
 
     [HttpPost("shorter")]
-    public async Task<ActionResult> ShortTheLink(
+    public async Task<ActionResult<ShortTheLinkResponseDto>> ShortTheLink(
         [FromBody] ShortTheLinkRequestDto request,
         CancellationToken cancellationToken)
     {
+        var command = new ShortTheLinkCommand(request);
         
+        var result = await _mediator.Send(command, cancellationToken);
+
+        return result.Match(
+            onSuccess: Ok,
+            onFailure: err => Problem(
+                detail: err.Description,
+                statusCode: err.StatusCode));
     }
 }

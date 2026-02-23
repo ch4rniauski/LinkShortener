@@ -1,0 +1,3 @@
+interface ShortTheLinkResponse {
+  shortUrl: string;
+}

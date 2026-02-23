@@ -1,0 +1,66 @@
+<div class="links-dashboard">
+  <!-- Заголовок -->
+  <div class="dashboard-header">
+    <h1>Сокращенные ссылки</h1>
+  </div>
+
+  <!-- Таблица -->
+  <div class="table-container">
+    <table class="links-table">
+      <!-- Заголовки (убрали #) -->
+      <thead>
+      <tr>
+        <th>Длинный URL</th>
+        <th>Сокращенный URL</th>
+        <th>Дата создания</th>
+        <th>Переходов</th>
+        <th>Управление</th>
+      </tr>
+      </thead>
+
+      <!-- Данные (убрали первую td) -->
+      <tbody>
+      <tr *ngFor="let link of allLinks" class="link-row">
+        <!-- Длинный URL -->
+        <td class="long-url">
+          <a [href]="link.originalUrl" target="_blank" class="url-link">
+            {{ link.originalUrl | slice:0:50 }}{{ link.originalUrl.length > 50 ? '...' : '' }}
+          </a>
+        </td>
+
+        <!-- Сокращенный URL -->
+        <td class="short-url">
+          <a [href]="'/r/' + link.shortToken" target="_blank" class="short-link">
+            {{ baseUrl }}/r/{{ link.shortToken }}
+          </a>
+        </td>
+
+        <!-- Дата создания -->
+        <td class="date">{{ link.createdAt | date:'dd.MM.yy HH:mm' }}</td>
+
+        <!-- Переходов -->
+        <td class="clicks">
+          <span class="clicks-badge">{{ link.clicks }}</span>
+        </td>
+
+        <!-- Управление -->
+        <td class="actions">
+          <button class="btn-edit" (click)="editLink(link.id)">
+            ✏️ Редактировать
+          </button>
+          <button class="btn-delete" (click)="deleteLink(link.id)">
+            🗑️ Удалить
+          </button>
+        </td>
+      </tr>
+
+      <!-- Пустая таблица (colspan=5) -->
+      <tr *ngIf="allLinks.length === 0" class="empty-row">
+        <td colspan="5" class="empty-message">
+          Нет сокращенных ссылок. Создайте первую!
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

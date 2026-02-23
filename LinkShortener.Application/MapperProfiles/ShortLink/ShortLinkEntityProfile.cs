@@ -1,5 +1,6 @@
 using AutoMapper;
 using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Requests;
+using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Responses;
 using ch4rniauski.LinkShortener.Domain.Entities;
 
 namespace ch4rniauski.LinkShortener.Application.MapperProfiles.ShortLink;
@@ -24,5 +25,12 @@ internal sealed class ShortLinkEntityProfile : Profile
             .ForMember(
                 dest => dest.OriginalUrl,
                 opt => opt.MapFrom(src => src.OriginalUrl));
+
+        CreateMap<ShortLinkEntity, GetShortLinkResponseDto>()
+            .ConstructUsing(src => new GetShortLinkResponseDto(
+                src.ShortToken,
+                src.OriginalUrl,
+                src.CreatedAt,
+                src.ClickCount));
     }
 }

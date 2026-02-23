@@ -1,3 +1,5 @@
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using ch4rniauski.LinkShortener.Application.Contracts.Repositories;
 using ch4rniauski.LinkShortener.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +10,14 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
 {
     private readonly LinksContext _context;
     private readonly DbSet<ShortLinkEntity> _dbSet;
+    private readonly IMapper _mapper;
 
-    public ShortLinkRepository(LinksContext context)
+    public ShortLinkRepository(
+        LinksContext context,
+        IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
         _dbSet = _context.ShortLinks;
     }
 
@@ -38,4 +44,14 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
         
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
+
+    public async Task<IList<TMap>> GetShortLinksByPage<TMap>(int page = 1, int pageSize = 15,
+        CancellationToken cancellationToken = default)
+        => await _dbSet
+            .AsNoTracking()
+            .OrderByDescending(s => s.CreatedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ProjectTo<TMap>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
 }

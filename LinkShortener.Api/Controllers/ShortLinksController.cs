@@ -49,4 +49,13 @@ public class ShortLinksController : ControllerBase
                 detail: err.Description,
                 statusCode: err.StatusCode));
     }
+
+    [HttpGet]
+    public async Task<ActionResult> GetShortLinksByPage(
+        CancellationToken cancellationToken,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 15)
+    {
+        
+    }
 }

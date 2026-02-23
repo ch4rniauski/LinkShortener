@@ -9,6 +9,7 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-link-shortener-form',
@@ -37,7 +38,19 @@ export class LinkShortenerForm {
 
   onSubmit() {
     if (this.form.valid) {
-      const shortUlr = this.linkShortenerService.shortTheLink(this.form.controls.originalUrl.value);
+      const request: ShortTheLinkRequest = {
+        originalUrl: this.form.controls.originalUrl.value
+      }
+
+      this.linkShortenerService.shortTheLink(request)
+        .subscribe({
+          next: (response) => {
+            this.form.controls.shortUrl.patchValue(response.shortUrl);
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error(error);
+          }
+        })
     }
   }
 

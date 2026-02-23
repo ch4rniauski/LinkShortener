@@ -1,0 +1,155 @@
+.links-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.stats {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.table-container {
+  overflow-x: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.links-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background: #f8fafc;
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #374151;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+}
+
+.link-row:hover {
+  background: #f8fafc;
+}
+
+.url-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-family: monospace;
+
+  &:hover { text-decoration: underline; }
+}
+
+.short-link {
+  color: #10b981;
+  font-weight: 500;
+  font-family: monospace;
+}
+
+.clicks-badge {
+  display: inline-block;
+  background: #3b82f6;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.actions {
+  white-space: nowrap;
+
+  .btn-edit {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-right: 8px;
+    cursor: pointer;
+
+    &:hover { background: #d97706; }
+  }
+
+  .btn-delete {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover { background: #dc2626; }
+  }
+}
+
+.empty-message {
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+  padding: 48px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.pagination-info {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pag-btn {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover:not(:disabled) {
+    background: #f1f5f9;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+}

@@ -1,0 +1,3 @@
+interface ShortTheLinkRequest {
+  originalUrl: string;
+}

@@ -1,0 +1,52 @@
+.link-shortener-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  gap: 30px;
+}
+
+.original-url-input, .short-url-input {
+  width: 200px;
+  height: 40px;
+  padding: 0 10px;
+  border: 2px solid var(--light-grey-colour);
+  border-radius: 8px;
+  font-size: 12px;
+  background: white;
+  transition: 0.2s;
+}
+
+.original-url-input:focus {
+  outline: none;
+  border-color: var(--blue-colour);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.short-url-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.shorten-button {
+  height: 40px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue-colour);
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.shorten-button:hover {
+  transform: scale(1.02);
+}
+
+.shorten-button:active {
+  transform: scale(0.98);
+}

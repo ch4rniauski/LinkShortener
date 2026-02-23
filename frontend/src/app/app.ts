@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, signal} from '@angular/core';
+import {LinkShortenerForm} from './common-ui/link-shortener-form/link-shortener-form';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    LinkShortenerForm
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

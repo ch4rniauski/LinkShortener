@@ -1,1 +1,30 @@
-<p>link-shortener-form works!</p>
+<div class="link-shortener">
+
+  <form
+    class="link-shortener-form"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="form"
+  >
+    <input
+      class="original-url-input"
+      type="url"
+      placeholder="Введите ссылку для сокращения"
+      name="originalUrl"
+      formControlName="originalUrl"
+    >
+
+    <div class="short-url-result">
+      <input
+        class="short-url-input"
+        type="url"
+        placeholder="Короткая ссылка появится здесь"
+        formControlName="shortUrl"
+      >
+
+      <button class="shorten-button" type="submit">
+        Сократить
+      </button>
+    </div>
+  </form>
+
+</div>

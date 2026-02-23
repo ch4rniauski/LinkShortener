@@ -51,11 +51,15 @@ public class ShortLinksController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetShortLinksByPage(
+    public async Task<ActionResult<IList<GetShortLinkResponseDto>>> GetShortLinksByPage(
         CancellationToken cancellationToken,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 15)
     {
+        var query = new GetShortLinksByPageCommand(page, pageSize);
         
+        var result = await _mediator.Send(query, cancellationToken);
+
+        return Ok(result);
     }
 }

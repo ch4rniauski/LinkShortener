@@ -15,7 +15,5 @@ internal sealed class GetShortLinksByPageCommandHandler : IRequestHandler<GetSho
     }
 
     public async Task<IList<GetShortLinkResponseDto>> Handle(GetShortLinksByPageCommand request, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+        => await _repository.GetShortLinksByPageAsync<GetShortLinkResponseDto>(request.Page, request.PageSize, cancellationToken);
 }

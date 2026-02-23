@@ -1,6 +1,7 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {LinkShortenerService} from '../../data/services/link-shortener.service';
 import {DatePipe, SlicePipe} from '@angular/common';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-links-dashboard',
@@ -14,51 +15,33 @@ import {DatePipe, SlicePipe} from '@angular/common';
 export class LinksDashboard {
   private linkShortenerService = inject(LinkShortenerService);
 
-  // 📊 Данные (единственное что осталось)
-  allLinks = signal<ShortLink[]>([]);
+  private page = 1;
+  private readonly pageSize = 15;
 
-  baseUrl = 'http://localhost:5100';
+  links: GetShortLinkResponse[] = []
+
+  baseUrl = 'http://localhost:5100/links';
 
   ngOnInit() {
-    this.loadLinks();
-  }
-
-  // 📥 Загрузка данных (ЗАМЕНИТЕ НА API)
-  loadLinks() {
-    // TODO: Заменить на реальный API вызов
-    // this.linkShortenerService.getLinks().subscribe({
-    //   next: (response) => {
-    //     this.allLinks.set(response);
-    //   }
-    // });
-
-    // ✅ Мок данные для демонстрации
-    this.allLinks.set([
-      {
-        id: 1,
-        originalUrl: 'https://very-long-url-example.com/very/very/long/path/to/some/resource',
-        shortToken: 'abc123',
-        createdAt: new Date('2026-02-23T10:30:00'),
-        clicks: 45
-      },
-      {
-        id: 2,
-        originalUrl: 'https://github.com/username/awesome-project',
-        shortToken: 'xyz789',
-        createdAt: new Date('2026-02-23T09:15:00'),
-        clicks: 12
-      }
-    ]);
+    this.linkShortenerService.getShortLinksByPage(this.page, this.pageSize)
+      .subscribe({
+        next: data => {
+          this.links = data;
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        }
+      });
   }
 
   // ✏️ Редактирование ссылки
-  editLink(id: number) {
+  editLink(id: string) {
     console.log('Редактировать ссылку:', id);
     // TODO: Открыть модалку/страницу редактирования
   }
 
   // 🗑️ Удаление ссылки
-  deleteLink(id: number) {
+  deleteLink(id: string) {
     if (confirm('Удалить эту ссылку?')) {
       // TODO: Вызов API удаления
       // this.linkShortenerService.deleteLink(id).subscribe({

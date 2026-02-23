@@ -45,7 +45,7 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
-    public async Task<IList<TMap>> GetShortLinksByPage<TMap>(int page = 1, int pageSize = 15,
+    public async Task<IList<TMap>> GetShortLinksByPageAsync<TMap>(int page = 1, int pageSize = 15,
         CancellationToken cancellationToken = default)
         => await _dbSet
             .AsNoTracking()

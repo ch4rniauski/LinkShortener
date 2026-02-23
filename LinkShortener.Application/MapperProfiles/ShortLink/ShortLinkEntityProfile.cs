@@ -28,6 +28,7 @@ internal sealed class ShortLinkEntityProfile : Profile
 
         CreateMap<ShortLinkEntity, GetShortLinkResponseDto>()
             .ConstructUsing(src => new GetShortLinkResponseDto(
+                src.Id,
                 src.ShortToken,
                 src.OriginalUrl,
                 src.CreatedAt,

@@ -62,4 +62,18 @@ public class ShortLinksController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult<DeleteShortLinkResponseDto>> DeleteShortLink(Guid id, CancellationToken cancellationToken)
+    {
+        var command = new DeleteShortLinkCommand(id);
+        
+        var result = await _mediator.Send(command, cancellationToken);
+        
+        return result.Match(
+            onSuccess: Ok,
+            onFailure: err => Problem(
+                detail: err.Description,
+                statusCode: err.StatusCode));
+    }
 }

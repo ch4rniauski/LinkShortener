@@ -1,6 +1,6 @@
 namespace ch4rniauski.LinkShortener.Application.Dto.ShortLink.Responses;
 
-public record GetShortLinkResponseDto(
+public sealed record GetShortLinkResponseDto(
     Guid Id,
     string ShortToken,
     string OriginalUrl,

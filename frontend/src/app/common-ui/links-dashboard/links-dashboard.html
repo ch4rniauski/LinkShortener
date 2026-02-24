@@ -19,9 +19,18 @@
         @for (link of links; track link.id) {
           <tr class="link-row">
             <td class="long-url">
-              <a [href]="link.originalUrl" target="_blank" class="url-link">
-                {{ link.originalUrl | slice:0:45 }}{{ link.originalUrl.length > 45 ? '...' : '' }}
-              </a>
+              @if (editingId === link.id) {
+                <input
+                  [(ngModel)]="editUrl"
+                  class="edit-input"
+                  (keyup.enter)="saveEdit(link.id)"
+                  (click)="$event.stopPropagation()"
+                  placeholder="Введите URL">
+              } @else {
+                <a [href]="link.originalUrl" target="_blank" class="url-link">
+                  {{ link.originalUrl | slice:0:45 }}{{ link.originalUrl.length > 45 ? '...' : '' }}
+                </a>
+              }
             </td>
 
             <td class="short-url">
@@ -31,18 +40,16 @@
             </td>
 
             <td class="date">{{ link.createdAt | date:'dd.MM.yy HH:mm' }}</td>
-
-            <td class="clicks">
-              <span class="clicks-badge">{{ link.clickCount }}</span>
-            </td>
+            <td class="clicks">{{ link.clickCount }}</td>
 
             <td class="actions">
-              <button class="btn-edit" (click)="editLink(link.id)">
-                Редактировать
-              </button>
-              <button class="btn-delete" (click)="deleteLink(link.id)">
-                Удалить
-              </button>
+              @if (editingId === link.id) {
+                <button class="btn-save" (click)="saveEdit(link.id)">Сохранить</button>
+                <button class="btn-cancel" (click)="cancelEdit()">Отмена</button>
+              } @else {
+                <button class="btn-edit" (click)="editLink(link.id)">Редактировать</button>
+                <button class="btn-delete" (click)="deleteLink(link.id)">Удалить</button>
+              }
             </td>
           </tr>
         }

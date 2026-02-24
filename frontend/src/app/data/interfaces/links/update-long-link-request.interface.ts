@@ -1,0 +1,3 @@
+interface UpdateLongLinkRequestInterface {
+  newLongLink: string;
+}

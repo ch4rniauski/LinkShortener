@@ -55,6 +55,18 @@ export class LinksDashboard {
   }
 
   saveEdit(id: string) {
+    if (!this.editUrl.trim()) {
+      alert('URL не может быть пустым!');
+      return;
+    }
+
+    try {
+      new URL(this.editUrl);
+    } catch {
+      alert('Введите корректный URL (http:// или https://)');
+      return;
+    }
+
     if (this.editUrl === this.originalUrl) {
       this.cancelEdit();
       return;
@@ -62,22 +74,38 @@ export class LinksDashboard {
 
     const request: UpdateLongLinkRequestInterface = {
       newLongLink: this.editUrl,
-    }
+    };
 
     this.linkShortenerService.updateLongLink(request, id)
       .subscribe({
         next: data => {
           const link = this.links.find(l => l.id === id);
-
           if (link) {
             link.originalUrl = data.newLongLink;
           }
+          this.cancelEdit();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
         }
       });
   }
 
   deleteLink(id: string) {
     if (confirm('Удалить эту ссылку?')) {
+      this.linkShortenerService.deleteLink(id)
+        .subscribe({
+          next: () => {
+            this.links = this.links.filter(link => link.id !== id);
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error(error);
+          }
+        });
     }
+  }
+
+  onShortLinkClick(link: GetShortLinkResponse) {
+    link.clickCount++;
   }
 }

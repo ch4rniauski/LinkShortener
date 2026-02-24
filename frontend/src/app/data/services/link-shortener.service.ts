@@ -27,8 +27,17 @@ export class LinkShortenerService {
       );
   }
 
-  updateLongLink(request: UpdateLongLinkRequestInterface, id: string): Observable<UpdateLongLinkResponseInterface>{
+  updateLongLink(request: UpdateLongLinkRequestInterface, id: string): Observable<UpdateLongLinkResponseInterface> {
     return this.httpClient.patch<UpdateLongLinkResponseInterface>(`${this.baseUrl}/${id}`, request)
+      .pipe(
+        catchError(
+          (error: HttpErrorResponse) => throwError(() => error)
+        )
+      );
+  }
+
+  deleteLink(id: string): Observable<DeleteShortLinkResponse> {
+    return this.httpClient.delete<DeleteShortLinkResponse>(`${this.baseUrl}/${id}`)
       .pipe(
         catchError(
           (error: HttpErrorResponse) => throwError(() => error)

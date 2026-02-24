@@ -34,10 +34,15 @@
             </td>
 
             <td class="short-url">
-              <a [href]="baseUrl + '/' + link.shortToken" target="_blank" class="short-link">
+              <a
+                [href]="baseUrl + '/' + link.shortToken"
+                target="_blank"
+                class="short-link"
+                (click)="onShortLinkClick(link)">
                 {{ baseUrl }}/{{ link.shortToken }}
               </a>
             </td>
+
 
             <td class="date">{{ link.createdAt | date:'dd.MM.yy HH:mm' }}</td>
             <td class="clicks">{{ link.clickCount }}</td>

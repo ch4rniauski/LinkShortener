@@ -1,0 +1,3 @@
+interface DeleteShortLinkResponse {
+  id: string;
+}

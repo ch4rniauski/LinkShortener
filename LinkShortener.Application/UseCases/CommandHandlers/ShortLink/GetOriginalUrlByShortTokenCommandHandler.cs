@@ -23,7 +23,9 @@ internal sealed class GetOriginalUrlByShortTokenCommandHandler : IRequestHandler
         if (entity is null)
         {
             return Result<RedirectByShortLinkResponse>
-                .Failure(Error.NotFound($"Url with token {request.Token} does not exist"));
+                .Failure(Error.NotFound(
+                    $"Url with token {request.Token} does not exist"
+                    ));
         }
 
         entity.ClickCount++;

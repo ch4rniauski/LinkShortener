@@ -18,13 +18,24 @@ internal sealed class DeleteShortLinkCommandHandler : IRequestHandler<DeleteShor
 
     public async Task<Result<DeleteShortLinkResponseDto>> Handle(DeleteShortLinkCommand request, CancellationToken cancellationToken)
     {
-        var isDeleted = await _repository.DeleteAsync(request.Id, cancellationToken);
+        var entity = await _repository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (entity is null)
+        {
+            return Result<DeleteShortLinkResponseDto>
+                .Failure(Error.NotFound(
+                    $"Short link with id {request.Id} was not found."
+                    ));
+        }
+        
+        var isDeleted = await _repository.DeleteAsync(entity, cancellationToken);
 
         if (!isDeleted)
         {
-            return Result<DeleteShortLinkResponseDto>.Failure(
-                Error.NotFound($"Short link with id {request.Id} was not found.")
-            );
+            return Result<DeleteShortLinkResponseDto>
+                .Failure(Error.InternalError(
+                    $"Short link with id {request.Id} was not deleted."
+                    ));
         }
 
         var response = new DeleteShortLinkResponseDto(request.Id);

@@ -75,7 +75,9 @@ internal sealed class ShortTheLinkCommandHandler : IRequestHandler<ShortTheLinkC
         if (!isAdded)
         {
             return Result<ShortTheLinkResponseDto>
-                .Failure(Error.InternalError("Error occured while adding short link"));
+                .Failure(Error.InternalError(
+                    "Error occured while adding short link"
+                    ));
         }
 
         response = new ShortTheLinkResponseDto($"{request.BaseUrl}/{shortToken}");

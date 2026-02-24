@@ -38,6 +38,9 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(s => s.OriginalUrl == originalUrl, cancellationToken);
 
+    public async Task<ShortLinkEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => await _dbSet.FindAsync(keyValues: [id], cancellationToken);
+
     public async Task<bool> UpdateAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default)
     {
         _dbSet.Update(entity);
@@ -45,15 +48,8 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
-    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default)
     {
-        var entity = await _dbSet.FindAsync(keyValues: [id], cancellationToken: cancellationToken);
-
-        if (entity is null)
-        {
-            return false;
-        }
-        
         _dbSet.Remove(entity);
         
         return await _context.SaveChangesAsync(cancellationToken) > 0;

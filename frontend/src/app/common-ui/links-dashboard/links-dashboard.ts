@@ -118,7 +118,6 @@ export class LinksDashboard {
     link.clickCount++;
   }
 
-  // ✅ Навигация по страницам
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages && page !== this.page) {
       this.page = page;
@@ -138,7 +137,6 @@ export class LinksDashboard {
     }
   }
 
-  // ✅ Генерация видимых номеров страниц (5 штук)
   getVisiblePages(): number[] {
     const pages: number[] = [];
     const maxVisible = 5;
@@ -147,7 +145,6 @@ export class LinksDashboard {
     let startPage = Math.max(1, this.page - halfVisible);
     let endPage = Math.min(this.totalPages, startPage + maxVisible - 1);
 
-    // Корректируем начало, если конец усекается
     if (endPage - startPage + 1 < maxVisible) {
       startPage = Math.max(1, endPage - maxVisible + 1);
     }

@@ -18,8 +18,8 @@ export class LinkShortenerService {
       )
   }
 
-  getShortLinksByPage(page: number, pageSize: number): Observable<GetShortLinkResponse[]> {
-    return this.httpClient.get<GetShortLinkResponse[]>(`${this.baseUrl}?page=${page}&pageSize=${pageSize}`)
+  getShortLinksByPage(page: number, pageSize: number): Observable<GetShortLinksByPageResponse> {
+    return this.httpClient.get<GetShortLinksByPageResponse>(`${this.baseUrl}?page=${page}&pageSize=${pageSize}`)
       .pipe(
         catchError(
           (error: HttpErrorResponse) => throwError(() => error)

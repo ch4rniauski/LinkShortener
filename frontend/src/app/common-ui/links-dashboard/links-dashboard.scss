@@ -6,7 +6,7 @@
 
 .table-container {
   overflow-x: auto;
-  background: white;
+  background: var(--white);
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
@@ -17,22 +17,22 @@
 }
 
 .links-table th {
-  background: #f8fafc;
+  background: var(--table-header);
   padding: 16px 12px;
   text-align: center;
   font-weight: 600;
   font-size: 14px;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--table-border);
 }
 
 .links-table td {
   padding: 16px 12px;
   text-align: center;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--table-row-border);
 }
 
 .link-row:hover {
-  background: #f8fafc;
+  background: var(--table-hover);
 }
 
 .long-url, .short-url {
@@ -47,7 +47,7 @@
 }
 
 .url-link {
-  color: #3b82f6;
+  color: var(--blue-colour);
 }
 
 .url-link:hover {
@@ -55,7 +55,7 @@
 }
 
 .short-link {
-  color: #10b981;
+  color: var(--green-colour);
   font-weight: 500;
 }
 
@@ -64,11 +64,9 @@
 }
 
 .clicks {
-  font-weight: 600;
-  color: #374151;
+  font-weight: 500;
 }
 
-/* ✅ Все кнопки */
 .btn-edit, .btn-delete, .btn-save, .btn-cancel {
   padding: 6px 12px;
   border: none;
@@ -80,45 +78,45 @@
 }
 
 .btn-edit {
-  background: #f59e0b;
-  color: white;
+  background: var(--orange-colour);
+  color: var(--white);
 }
 
 .btn-edit:hover {
-  background: #d97706;
+  background: var(--orange-hover);
 }
 
 .btn-delete {
-  background: #ef4444;
-  color: white;
+  background: var(--red-colour);
+  color: var(--white);
 }
 
 .btn-delete:hover {
-  background: #dc2626;
+  background: var(--red-hover);
 }
 
 .btn-save {
-  background: #10b981;
-  color: white;
+  background: var(--green-colour);
+  color: var(--white);
 }
 
 .btn-save:hover {
-  background: #059669;
+  background: var(--green-hover);
 }
 
 .btn-cancel {
-  background: #6b7280;
-  color: white;
+  background: var(--grey-colour);
+  color: var(--white);
 }
 
 .btn-cancel:hover {
-  background: #4b5563;
+  background: var(--grey-hover);
 }
 
 .edit-input {
   width: 100%;
   padding: 8px 12px;
-  border: 2px solid #3b82f6;
+  border: 2px solid var(--blue-colour);
   border-radius: 6px;
   font-family: monospace;
   font-size: 14px;
@@ -127,6 +125,48 @@
 
 .edit-input:focus {
   outline: none;
-  border-color: #1d4ed8;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--light-blue-hover);
+  box-shadow: 0 0 0 3px var(--shadow-blue);
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 16px;
+  gap: 8px;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pag-btn {
+  padding: 8px 12px;
+  border: 1px solid var(--light-grey-colour);
+  background: var(--white);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 44px;
+}
+
+.pag-btn:hover:not(:disabled) {
+  background: var(--pag-hover-bg);
+  border-color: var(--pag-hover-border);
+}
+
+.pag-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pag-btn.active {
+  background: var(--blue-colour);
+  color: var(--white);
+  border-color: var(--blue-colour);
 }

@@ -2,6 +2,7 @@ using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Requests;
 using ch4rniauski.LinkShortener.Application.Dto.ShortLink.Responses;
 using ch4rniauski.LinkShortener.Application.Extensions;
 using ch4rniauski.LinkShortener.Application.UseCases.Commands.ShortLink;
+using ch4rniauski.LinkShortener.Application.UseCases.Queries.ShortLink;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,12 +52,12 @@ public class ShortLinksController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IList<GetShortLinkResponseDto>>> GetShortLinksByPage(
+    public async Task<ActionResult<GetShortLinksByPageResponseDto>> GetShortLinksByPage(
         CancellationToken cancellationToken,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 15)
     {
-        var query = new GetShortLinksByPageCommand(page, pageSize);
+        var query = new GetShortLinksByPageQuery(page, pageSize);
         
         var result = await _mediator.Send(query, cancellationToken);
 

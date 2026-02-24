@@ -17,10 +17,12 @@ import {FormsModule} from '@angular/forms';
 export class LinksDashboard {
   private linkShortenerService = inject(LinkShortenerService);
 
-  private page = 1;
-  private readonly pageSize = 15;
+  page = 1;
+  totalPages = 1;
+  readonly pageSize = 15;
 
   links: GetShortLinkResponse[] = [];
+  totalLinksCount = 0;
   editingId: string | null = null;
   editUrl: string = '';
   originalUrl: string = '';
@@ -28,10 +30,17 @@ export class LinksDashboard {
   baseUrl = 'http://localhost:5100/links';
 
   ngOnInit() {
+    this.loadLinks()
+  }
+
+  private loadLinks() {
     this.linkShortenerService.getShortLinksByPage(this.page, this.pageSize)
       .subscribe({
         next: data => {
-          this.links = data;
+          this.links = data.links;
+          this.totalLinksCount = data.totalLinksCount;
+
+          this.totalPages = Math.ceil(this.totalLinksCount / this.pageSize);
         },
         error: (error: HttpErrorResponse) => {
           console.error(error);
@@ -108,4 +117,46 @@ export class LinksDashboard {
   onShortLinkClick(link: GetShortLinkResponse) {
     link.clickCount++;
   }
+
+  // ✅ Навигация по страницам
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages && page !== this.page) {
+      this.page = page;
+      this.loadLinks();
+    }
+  }
+
+  prevPage() {
+    if (this.page > 1) {
+      this.goToPage(this.page - 1);
+    }
+  }
+
+  nextPage() {
+    if (this.page < this.totalPages) {
+      this.goToPage(this.page + 1);
+    }
+  }
+
+  // ✅ Генерация видимых номеров страниц (5 штук)
+  getVisiblePages(): number[] {
+    const pages: number[] = [];
+    const maxVisible = 5;
+    const halfVisible = Math.floor(maxVisible / 2);
+
+    let startPage = Math.max(1, this.page - halfVisible);
+    let endPage = Math.min(this.totalPages, startPage + maxVisible - 1);
+
+    // Корректируем начало, если конец усекается
+    if (endPage - startPage + 1 < maxVisible) {
+      startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  protected readonly Math = Math;
 }

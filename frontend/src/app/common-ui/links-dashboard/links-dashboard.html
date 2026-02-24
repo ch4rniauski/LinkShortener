@@ -61,4 +61,32 @@
       </tbody>
     </table>
   </div>
+  @if (totalPages > 1) {
+    <div class="pagination-container">
+      <div class="pagination-controls">
+        <button
+          class="pag-btn"
+          [disabled]="page === 1"
+          (click)="prevPage()">
+          ← Предыдущая
+        </button>
+
+        @for (p of getVisiblePages(); track p) {
+          <button
+            class="pag-btn"
+            [class.active]="p === page"
+            (click)="goToPage(p)">
+            {{ p }}
+          </button>
+        }
+
+        <button
+          class="pag-btn"
+          [disabled]="page === totalPages"
+          (click)="nextPage()">
+          Следующая
+        </button>
+      </div>
+    </div>
+  }
 </div>

@@ -41,6 +41,9 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
     public async Task<ShortLinkEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => await _dbSet.FindAsync(keyValues: [id], cancellationToken);
 
+    public async Task<int> GetTotalLinksCountAsync(CancellationToken cancellationToken = default)
+        => await _dbSet.CountAsync(cancellationToken);
+
     public async Task<bool> UpdateAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default)
     {
         _dbSet.Update(entity);

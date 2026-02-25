@@ -13,7 +13,8 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<LinksContext>(opt => 
             opt.UseMySql(
                 connectionString: configuration.GetConnectionString("MariaDbLinks"),
-                serverVersion: ServerVersion.AutoDetect(configuration.GetConnectionString("MariaDbLinks")))
+                serverVersion: ServerVersion.AutoDetect(configuration.GetConnectionString("MariaDbLinks"))
+                )
             );
 
         services.AddScoped<IShortLinkRepository, ShortLinkRepository>();

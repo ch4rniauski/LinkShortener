@@ -13,11 +13,11 @@ namespace LinkShortener.Tests.Tests.UnitTests.ShortLink;
 public sealed class DeleteShortLinkUnitTests
 {
     private readonly DeleteShortLinkCommandHandler _commandHandler;
-    private readonly Mock<IShortLinkRepository> _mockShortLinkRepository = new();
+    private readonly Mock<IShortLinkRepository> _mockRepository = new();
 
     public DeleteShortLinkUnitTests()
     {
-        _commandHandler = new DeleteShortLinkCommandHandler(_mockShortLinkRepository.Object);
+        _commandHandler = new DeleteShortLinkCommandHandler(_mockRepository.Object);
     }
 
     [Fact]
@@ -31,12 +31,12 @@ public sealed class DeleteShortLinkUnitTests
         var entity = new ShortLinkEntity();
         var responseDto = new DeleteShortLinkResponseDto(id);
         
-        _mockShortLinkRepository.Setup(r => r.GetByIdAsync(
+        _mockRepository.Setup(r => r.GetByIdAsync(
                 id, 
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(entity);
 
-        _mockShortLinkRepository.Setup(r => r.DeleteAsync(
+        _mockRepository.Setup(r => r.DeleteAsync(
                 entity,
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(isSuccess);
@@ -63,7 +63,7 @@ public sealed class DeleteShortLinkUnitTests
         var command = new DeleteShortLinkCommand(id);
         ShortLinkEntity? entity = null;
         
-        _mockShortLinkRepository.Setup(r => r.GetByIdAsync(
+        _mockRepository.Setup(r => r.GetByIdAsync(
                 id, 
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(entity);
@@ -89,12 +89,12 @@ public sealed class DeleteShortLinkUnitTests
         var command = new DeleteShortLinkCommand(id);
         var entity = new ShortLinkEntity();
         
-        _mockShortLinkRepository.Setup(r => r.GetByIdAsync(
+        _mockRepository.Setup(r => r.GetByIdAsync(
                 id, 
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(entity);
 
-        _mockShortLinkRepository.Setup(r => r.DeleteAsync(
+        _mockRepository.Setup(r => r.DeleteAsync(
                 entity,
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(isSuccess);

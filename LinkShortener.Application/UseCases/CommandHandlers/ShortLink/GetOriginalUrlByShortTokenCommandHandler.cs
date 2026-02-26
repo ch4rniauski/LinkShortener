@@ -28,9 +28,7 @@ internal sealed class GetOriginalUrlByShortTokenCommandHandler : IRequestHandler
                     ));
         }
 
-        entity.ClickCount++;
-        
-        await _repository.UpdateAsync(entity, cancellationToken);
+        await _repository.IncreaseClickCounterAsync(entity.Id, cancellationToken);
 
         var response = new RedirectByShortLinkResponse(entity.OriginalUrl);
         

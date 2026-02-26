@@ -51,6 +51,14 @@ internal sealed class ShortLinkRepository : IShortLinkRepository
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
+    public async Task<bool> IncreaseClickCounterAsync(Guid id, CancellationToken cancellationToken = default)
+        => await _dbSet
+            .Where(s => s.Id == id)
+            .ExecuteUpdateAsync(setter => setter.SetProperty(
+                    property => property.ClickCount,
+                    expression => expression.ClickCount + 1), 
+                cancellationToken) > 0;
+
     public async Task<bool> DeleteAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default)
     {
         _dbSet.Remove(entity);

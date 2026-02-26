@@ -9,7 +9,8 @@ public interface IShortLinkRepository
     Task<ShortLinkEntity?> GetByOriginalUrlAsync(string originalUrl, CancellationToken cancellationToken = default);
     Task<ShortLinkEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<int> GetTotalLinksCountAsync(CancellationToken cancellationToken = default);
-    Task<bool> UpdateAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default);
-    Task<bool> DeleteAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default);
     Task<IList<TMap>> GetShortLinksByPageAsync<TMap>(int page = 1, int pageSize = 15, CancellationToken cancellationToken = default);
+    Task<bool> UpdateAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default);
+    Task<bool> IncreaseClickCounterAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<bool> DeleteAsync(ShortLinkEntity entity, CancellationToken cancellationToken = default);
 }

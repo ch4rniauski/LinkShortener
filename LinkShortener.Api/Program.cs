@@ -1,3 +1,4 @@
+using ch4rniauski.LinkShortener.Api.Common;
 using ch4rniauski.LinkShortener.Api.Extensions;
 using ch4rniauski.LinkShortener.Application.Extensions;
 using ch4rniauski.LinkShortener.Infrastructure.Extensions;
@@ -9,13 +10,14 @@ builder.Services.AddCors(opt =>
     opt.AddDefaultPolicy(policy =>
     {
         policy
-            .AllowAnyOrigin()
+            .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod();
     }));
 
 builder.Services.AddSwaggerGen();
 
+EnvironmentalHelper.SetEnvironmentVariablesFromDotEnvFile();
 builder.Services.AddMediatrConfiguration();
 builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddValidationConfiguration();

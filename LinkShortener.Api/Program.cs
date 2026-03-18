@@ -36,6 +36,6 @@ app.UseCors();
 
 app.MapControllers();
 
-await app.ApplyMigrationsAsync();
+//await app.ApplyMigrationsAsync();
 
 await app.RunAsync();

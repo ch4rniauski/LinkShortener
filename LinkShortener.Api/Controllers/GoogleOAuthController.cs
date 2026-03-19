@@ -1,3 +1,4 @@
+using ch4rniauski.LinkShortener.Application.Dto.GoogleOAuth.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 
@@ -25,9 +26,9 @@ public class GoogleOAuthController : ControllerBase
         return Redirect(redirectStr);
     }
 
-    [HttpGet("callback")]
+    [HttpPost("callback")]
     public async Task<ActionResult> Callback(
-        [FromQuery] string code,
+        [FromBody] GoogleOAuthCallbackRequestDto request,
         CancellationToken cancellationToken)
     {
         const string googleOAuthBaseUrl = "https://oauth2.googleapis.com/token";
@@ -38,7 +39,7 @@ public class GoogleOAuthController : ControllerBase
         {
             ["client_id"] = Environment.GetEnvironmentVariable("OAUTH_GOOGLE_CLIENT_ID") ?? string.Empty,
             ["client_secret"] = Environment.GetEnvironmentVariable("OAUTH_GOOGLE_CLIENT_SECRET") ?? string.Empty,
-            ["code"] = code,
+            ["code"] = request.Code,
             ["grant_type"] = "authorization_code",
             ["redirect_uri"] = "http://localhost:4200/auth/google"
         };

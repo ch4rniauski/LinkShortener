@@ -1,0 +1,3 @@
+interface GoogleOAuthCallbackRequest {
+  code: string;
+}

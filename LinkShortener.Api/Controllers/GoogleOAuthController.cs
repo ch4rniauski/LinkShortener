@@ -1,4 +1,9 @@
+using System.Text.Json;
 using ch4rniauski.LinkShortener.Application.Dto.GoogleOAuth.Requests;
+using ch4rniauski.LinkShortener.Application.Extensions;
+using ch4rniauski.LinkShortener.Application.Models.Google;
+using ch4rniauski.LinkShortener.Application.UseCases.Commands.GoogleOAuth;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 
@@ -8,6 +13,13 @@ namespace ch4rniauski.LinkShortener.Api.Controllers;
 [Route("google")]
 public class GoogleOAuthController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public GoogleOAuthController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     [HttpGet("redirect")]
     public ActionResult RedirectToGoogleOAuth()
     {
@@ -45,9 +57,19 @@ public class GoogleOAuthController : ControllerBase
         };
 
         var response = await client.PostAsync(googleOAuthBaseUrl, new FormUrlEncodedContent(data), cancellationToken);
+        response.EnsureSuccessStatusCode();
         
         var json = await response.Content.ReadAsStringAsync(cancellationToken);
+        var deserializedResponse = JsonSerializer.Deserialize<GoogleOAuthResponse>(json);
 
-        return Ok(json);
+        var command = new GetUserInfoCommand(deserializedResponse!);
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        return result.Match(
+            onSuccess: Ok,
+            onFailure: err => Problem(
+                detail: err.Description,
+                statusCode: err.StatusCode));
     }
 }

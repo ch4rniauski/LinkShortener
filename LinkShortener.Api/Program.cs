@@ -1,5 +1,4 @@
 using ch4rniauski.LinkShortener.Api.Common;
-using ch4rniauski.LinkShortener.Api.Extensions;
 using ch4rniauski.LinkShortener.Application.Extensions;
 using ch4rniauski.LinkShortener.Infrastructure.Extensions;
 
@@ -22,6 +21,7 @@ builder.Services.AddMediatrConfiguration();
 builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddValidationConfiguration();
 builder.Services.AddTokenProvidersConfiguration();
+builder.Services.AddTokenConfiguration();
 builder.Services.AddLinksContextConfiguration(builder.Configuration);
 
 var app = builder.Build();
@@ -36,6 +36,6 @@ app.UseCors();
 
 app.MapControllers();
 
-await app.ApplyMigrationsAsync();
+//await app.ApplyMigrationsAsync();
 
 await app.RunAsync();

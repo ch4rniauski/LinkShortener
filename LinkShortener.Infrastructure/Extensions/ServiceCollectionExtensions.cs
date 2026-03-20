@@ -1,4 +1,6 @@
+using ch4rniauski.LinkShortener.Application.Contracts.Authentication;
 using ch4rniauski.LinkShortener.Application.Contracts.Repositories;
+using ch4rniauski.LinkShortener.Infrastructure.GoogleOAuth;
 using ch4rniauski.LinkShortener.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,5 +20,10 @@ public static class ServiceCollectionExtensions
             );
 
         services.AddScoped<IShortLinkRepository, ShortLinkRepository>();
+    }
+
+    public static void AddTokenConfiguration(this IServiceCollection services)
+    {
+        services.AddSingleton<ITokenValidator, GoogleOAuthTokenValidator>();
     }
 }

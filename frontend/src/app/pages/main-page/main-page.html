@@ -1,4 +1,14 @@
 <div class="main-page">
+  <div class="main-page-top-bar">
+    <app-login-button (openRequested)="openLoginModal()"></app-login-button>
+  </div>
+
   <app-link-shortener-form></app-link-shortener-form>
   <app-links-dashboard></app-links-dashboard>
+
+  <app-login-modal
+    [isOpen]="isLoginModalOpen"
+    (closed)="closeLoginModal()"
+    (googleSelected)="onGoogleLoginSelected()"
+  ></app-login-modal>
 </div>

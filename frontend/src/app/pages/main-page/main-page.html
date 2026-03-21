@@ -1,14 +1,26 @@
 <div class="main-page">
   <div class="main-page-top-bar">
-    <app-login-button (openRequested)="openLoginModal()"></app-login-button>
+    @if (!isAuthorized) {
+      <app-login-button (openRequested)="openLoginModal()"></app-login-button>
+    } @else {
+      <app-user-menu
+        [userName]="userName"
+        [userPicture]="userPicture"
+        [isOpen]="isUserMenuOpen"
+        (toggleRequested)="toggleUserMenu()"
+        (logoutRequested)="onLogoutClick()"
+      ></app-user-menu>
+    }
   </div>
 
   <app-link-shortener-form></app-link-shortener-form>
   <app-links-dashboard></app-links-dashboard>
 
-  <app-login-modal
-    [isOpen]="isLoginModalOpen"
-    (closed)="closeLoginModal()"
-    (googleSelected)="onGoogleLoginSelected()"
-  ></app-login-modal>
+  @if (!isAuthorized) {
+    <app-login-modal
+      [isOpen]="isLoginModalOpen"
+      (closed)="closeLoginModal()"
+      (googleSelected)="onGoogleLoginSelected()"
+    ></app-login-modal>
+  }
 </div>

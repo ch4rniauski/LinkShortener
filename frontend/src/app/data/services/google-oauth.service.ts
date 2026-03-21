@@ -17,4 +17,8 @@ export class GoogleOauthService {
         )
       )
   }
+
+  redirectToGoogleOAuth() : void {
+    window.location.href = `${this.baseUrl}/redirect`;
+  }
 }

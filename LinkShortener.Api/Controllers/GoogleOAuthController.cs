@@ -1,5 +1,6 @@
 using System.Text.Json;
 using ch4rniauski.LinkShortener.Application.Dto.GoogleOAuth.Requests;
+using ch4rniauski.LinkShortener.Application.Dto.GoogleOAuth.Responses;
 using ch4rniauski.LinkShortener.Application.Extensions;
 using ch4rniauski.LinkShortener.Application.Models.Google;
 using ch4rniauski.LinkShortener.Application.UseCases.Commands.GoogleOAuth;
@@ -39,7 +40,7 @@ public class GoogleOAuthController : ControllerBase
     }
 
     [HttpPost("callback")]
-    public async Task<ActionResult> Callback(
+    public async Task<ActionResult<TokenValidationResultDto>> Callback(
         [FromBody] GoogleOAuthCallbackRequestDto request,
         CancellationToken cancellationToken)
     {

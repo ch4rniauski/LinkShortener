@@ -12,5 +12,4 @@ import {LinksDashboard} from "../../common-ui/links-dashboard/links-dashboard";
   styleUrl: './main-page.scss',
 })
 export class MainPage {
-
 }

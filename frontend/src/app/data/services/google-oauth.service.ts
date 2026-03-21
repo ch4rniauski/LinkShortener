@@ -9,8 +9,8 @@ export class GoogleOauthService {
   private httpClient = inject(HttpClient)
   private baseUrl = 'http://localhost:5100/google';
 
-  callback(request: GoogleOAuthCallbackRequest) : Observable<string> {
-    return this.httpClient.post<string>(this.baseUrl + '/callback', request)
+  callback(request: GoogleOAuthCallbackRequest) : Observable<TokenValidationResultResponse> {
+    return this.httpClient.post<TokenValidationResultResponse>(this.baseUrl + '/callback', request)
       .pipe(
         catchError(
           (error: HttpErrorResponse) => throwError(() => error)

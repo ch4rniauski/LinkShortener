@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {filter} from 'rxjs';
 import {GoogleOauthService} from '../../data/services/google-oauth.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -12,6 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class AuthRedirectPage implements OnInit {
   private route = inject(ActivatedRoute)
+  private router = inject(Router)
   private googleOAuthService = inject(GoogleOauthService)
 
   ngOnInit(): void {
@@ -26,7 +27,11 @@ export class AuthRedirectPage implements OnInit {
           this.googleOAuthService.callback(request)
             .subscribe({
               next: (response) => {
-                console.log(response)
+                this.router.navigate(['/'], {
+                  state: {
+                    authData: response
+                  }
+                })
               },
               error: (error: HttpErrorResponse) => {
                 console.error(error);

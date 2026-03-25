@@ -1,4 +1,5 @@
 using ch4rniauski.LinkShortener.Api.Common;
+using ch4rniauski.LinkShortener.Api.Extensions;
 using ch4rniauski.LinkShortener.Application.Extensions;
 using ch4rniauski.LinkShortener.Infrastructure.Extensions;
 
@@ -36,6 +37,6 @@ app.UseCors();
 
 app.MapControllers();
 
-//await app.ApplyMigrationsAsync();
+await app.ApplyMigrationsAsync();
 
 await app.RunAsync();

@@ -51,7 +51,6 @@ export class MainPage implements OnInit {
   }
 
   onLogoutClick() {
-    // TODO: Add logout logic when backend integration is ready.
     console.log('Logout clicked');
     this.isUserMenuOpen = false;
   }

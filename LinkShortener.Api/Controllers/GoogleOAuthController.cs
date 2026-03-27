@@ -34,9 +34,9 @@ public class GoogleOAuthController : ControllerBase
             ["scope"] = "email openid profile"
         };
         
-        var redirectStr = QueryHelpers.AddQueryString(googleOAuthBaseUrl, queryParams);
+        var redirectUrl = QueryHelpers.AddQueryString(googleOAuthBaseUrl, queryParams);
         
-        return Redirect(redirectStr);
+        return Redirect(redirectUrl);
     }
 
     [HttpPost("callback")]
